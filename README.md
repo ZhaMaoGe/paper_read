@@ -54,3 +54,8 @@ Expectation_x(log(D(x)))+Expectation_z(log(1-D(G(z))))，等价于最小化-Expe
 
 ### Layer Normalization ###
 没看懂，CNN好像不适合用Layer Normalization
+
+### Group Normalization ###
+这篇文章详细的总结了batch normalization, layer normalization, instance normaliztion, group normalization的不同，总的来说，对于一个形状为NCHW的输入，(卷积神经网络)batch normalization计算NHW的均值跟方差，layer normalization计算CHW的均值跟方差，instance noramlization计算HW的均值跟方差，group把channel分为几组，计算group组的CHW，在学习参数lambda跟beta时，大家都是学习channel同等数量的值。batch normalization有一点特殊的在于，由于每次都是用随机的batch，因此具有一定的泛化效果，另外 除了batch normalization时在测试时使用frozen的值，其他的都是当场计算的。
+作者说group nomalization性能超越 layer normalization 和instance  normalization，并且当group内channnel数是channel数或者1时，分别达到layer normalization和instance normalization的效果。
+另外,batch normalization在batch 为1时可以近似看成是instance normalization.
