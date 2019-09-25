@@ -8,17 +8,20 @@
 2. 使用了传统方法的形变场作为label，并且提出了衡量配准后的图像与template图像相似性的损失，使用这两个损失来训练，从而得到比传统形变场更好的结果。
 3. 在Unet上结构引入了多级label，从而加快并稳定训练。
 
-<img src="./BIRNET.png" width="500" hegiht="313" align=center />
+![图2](BIRNET.png)
 
 ### Generative Adversarial Networks ###
 Ian Goodfellow的惊世之作，提出了生成对抗网络，生成对抗网络的公式为
-<img src="Generative Adversarial Networks loss.png">
+![图3](Generative Adversarial Networks loss.png)
+
 生成器从随机分布z映射到G(z)，判别器的任务是最大化该损失函数，由于D(x)范围0~1,所以该损失函数最大为0，从而D(x)对于label分布x的输出为1，D(G(z))对于生成器映射的输出为0，生成器的任务是最小化该损失，使得D(G(z))的输出为1，生成对抗网络在网络容量无限的情况下，可以收敛到最优解，即判别器输出为0.5，生成器输出G(z)与x分布相同。
 该理论证明如下：
-<img src="Generative Adversarial Networks optimal G.png">
-<img src="Generative Adversarial Networks optimal D.png">
+![图4](Generative Adversarial Networks optimal G.png)
+![图5](Generative Adversarial Networks optimal D.png)
+
 收敛性证明如下：
-<img src="Generative Adversarial Networks optimal G convergence.png">
+![图6](Generative Adversarial Networks optimal G convergence.png)
+
 
 相对熵，也称为KL散度，衡量两个分布的对数差在p上的期望值，设p(x),q(x)是离散随机变量X中取值的两个概率分布，则p对q的相对熵为KL(p||q)=\sigma_x p(x)log(p(x)/q(x))
 
@@ -39,14 +42,18 @@ JSD(p||q) = 0.5 * (\sigma_x p(x)log(p(x)/(p(x)+q(x))/2) + \sigma_x q(x)log(q(x)/
 Expectation_x(log(D(x)))+Expectation_z(log(1-D(G(z))))，等价于最小化-Expectation_x(log(D(x)))+Expectation_z(log(1-D(G(z))))，该公式的最小值为
 2log2 - JSD(p||q), 最小值在p/(p+q)处取到，因此，当p与q没有交集时，判别器损失为0，即判别器训练到最优时，如果p与q没有交集，那么Expection_z log(1-D(G(z))) = log2，为常数，因此无法训练生成器。
 该论文也分别分析了p与q是是离散概率以及p与q是低维流形时，两者概率没有交集，总存在最优的判别器，这种情况在实际训练中经常发生，所以原始形式的损失函数使得生成器得到的梯度为0，不容易训练。
-<br/>另外一种为了避免生成器损失为0的损失函数，<img src="Towards Principled Methods for Training GenerativeAdversarial Networks loss d trick.png">，
-<img src="Towards Principled Methods for Training Generative networks loss D trick2.png">
+<br/>另外一种为了避免生成器损失为0的损失函数，
+![图7](Towards Principled Methods for Training GenerativeAdversarial Networks loss d trick.png)
+![图8](Towards Principled Methods for Training Generative networks loss D trick2.png)
 
 ### Wassersteine GAN ###
-这是上一篇作者的后续著作，作者提出使用Earth-move距离来作为GAN训练的损失函数，Earth-Move距离公式如下<br/>
-<img src="Wasserstein GAN earth move.png"><br/>
+这是上一篇作者的后续著作，作者提出使用Earth-move距离来作为GAN训练的损失函数，Earth-Move距离公式如下
+<br/>
+![图9](Wasserstein GAN earth move.png)
+<br/>
 代表着在所有的p跟q的联合分布里，两者差距最小的距离，可以理解为，在所有p土堆跟q土堆的联合分布里，使用最小的做功来使得p土堆跟q土堆一致，所以称之为推土机距离，相比于香农距离，该距离能够提供稳定且有意义的梯度。并且根据已有的定理，如果判别器的函数满足Lipschitz条件，那么该距离可以表示成<br/>
-<img src="Wasserstein GAN earth move2.png"><br/>
+![图10](Wasserstein GAN earth move2.png)
+<br/>
 作者给出了WGAN的一个算法，但是参数裁剪会造成一些问题(论文里说clip weight设置过大需要训练时间过长，clip weight设置过小容易梯度消失)
 
 ### Improved Training of Wasserstein GANs ###
