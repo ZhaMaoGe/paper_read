@@ -11,15 +11,15 @@
 ![图2](BIRNET.png)
 
 ### Generative Adversarial Networks ###
-Ian Goodfellow的惊世之作，提出了生成对抗网络，生成对抗网络的公式为
+Ian Goodfellow的惊世之作，提出了生成对抗网络，生成对抗网络的公式为<br/>
 ![图3](Generative_Adversarial_Network_loss.png)
 
 生成器从随机分布z映射到G(z)，判别器的任务是最大化该损失函数，由于D(x)范围0~1,所以该损失函数最大为0，从而D(x)对于label分布x的输出为1，D(G(z))对于生成器映射的输出为0，生成器的任务是最小化该损失，使得D(G(z))的输出为1，生成对抗网络在网络容量无限的情况下，可以收敛到最优解，即判别器输出为0.5，生成器输出G(z)与x分布相同。
-该理论证明如下：
-![图4](Generative_Adversarial_Networks_optimal_D.png)
+该理论证明如下：<br/>
+![图4](Generative_Adversarial_Networks_optimal_D.png)<br/>
 ![图5](Generative_Adversarial_Networks_optimal_G.png)
 
-收敛性证明如下：
+收敛性证明如下：<br/>
 ![图6](Generative_Adversarial_Networks_Convergence.png)
 
 
@@ -44,7 +44,7 @@ Expectation_x(log(D(x)))+Expectation_z(log(1-D(G(z))))，等价于最小化-Expe
 该论文也分别分析了p与q是是离散概率以及p与q是低维流形时，两者概率没有交集，总存在最优的判别器，这种情况在实际训练中经常发生，所以原始形式的损失函数使得生成器得到的梯度为0，不容易训练。
 <br/>另外一种为了避免生成器损失为0的损失函数，
 
-![图7](Towards_Principled_Methods_for_Training_GenerativeAdversarial_Networks_loss_D_trick.png)
+![图7](Towards_Principled_Methods_for_Training_GenerativeAdversarial_Networks_loss_D_trick.png)<br/>
 ![图8](Towards_Principled_Methods_for_Training_Generative_networks_loss_D_trick2.png)
 
 ### Wassersteine GAN ###
