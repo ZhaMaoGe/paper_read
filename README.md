@@ -8,7 +8,7 @@
 2. 使用了传统方法的形变场作为label，并且提出了衡量配准后的图像与template图像相似性的损失，使用这两个损失来训练，从而得到比传统形变场更好的结果。
 3. 在Unet上结构引入了多级label，从而加快并稳定训练。
 
-<img src="BIRNET.png" width="500" hegiht="313" align=center />
+<img src="./BIRNET.png" width="500" hegiht="313" align=center />
 
 ### Generative Adversarial Networks ###
 Ian Goodfellow的惊世之作，提出了生成对抗网络，生成对抗网络的公式为
